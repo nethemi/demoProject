@@ -1,0 +1,43 @@
+private static nameDB context;
+
+public static nameDB GetContext()
+{
+    if (_instance == null)
+    {
+        _instance = new nameDB();
+    }
+    return _instance;
+
+}
+
+CREATE TABLE [dbo].[Orders] (
+[OrderID] int primary key,
+[DateCreate] datetime,
+[PersonFK] int foreign key references [dbo].[PersonClients](PersonID),
+[CompanyFK] nvarchar(50) foreign key references [dbo].[CompanyClients](CompanyID),
+[StatusFK] int foreign key references [dbo].[Statuses](StatusID),
+[DateEnd] datetime,
+[WorkerFK] int foreign key references [dbo].[Workers](WorkerID),
+[PeriodExecution] int
+)
+
+CREATE TABLE [dbo].[Workers] (
+[WorkerID] int primary key,
+[PostFK] int foreign key references [dbo].[WorkerPosts](PostID),
+[FIO] nvarchar(255),
+[Login] nvarchar(255),
+[Password] nvarchar(255),
+[LastAuthorization] datetime
+)
+
+CREATE TABLE [dbo].[WorkerService] (
+[WorkerServiceID] float,
+[WorkerFK] int foreign key references [dbo].[Workers](WorkerID),
+[ServiceFK] int foreign key references [dbo].[Services](ServiceID)
+)
+
+CREATE TABLE [dbo].[ServiceInOrder] (
+[ServiceOrderID] int primary key identity,
+[OrderFK] int foreign key references [dbo].[Orders](OrderID),
+[ServiceFK] int foreign key references [dbo].[Services](ServiceID)
+)

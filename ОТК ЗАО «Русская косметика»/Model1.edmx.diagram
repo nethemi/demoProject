@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f631d92841f644f2869e33e2e3c08987" Name="Diagram1">
+        <EntityTypeShape EntityType="demoTestingModel.CompanyClients" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoTestingModel.Orders" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoTestingModel.PersonClients" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoTestingModel.ServiceInOrder" Width="1.5" PointX="7.5" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoTestingModel.Services" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoTestingModel.Statuses" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoTestingModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoTestingModel.WorkerPosts" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="demoTestingModel.Workers" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="demoTestingModel.FK__Orders__CompanyF__72910220" ManuallyRouted="false" />
+        <AssociationConnector Association="demoTestingModel.FK__Orders__PersonFK__719CDDE7" ManuallyRouted="false" />
+        <AssociationConnector Association="demoTestingModel.FK__Orders__StatusFK__73852659" ManuallyRouted="false" />
+        <AssociationConnector Association="demoTestingModel.FK__Orders__WorkerFK__74794A92" ManuallyRouted="false" />
+        <AssociationConnector Association="demoTestingModel.FK__ServiceIn__Order__7755B73D" ManuallyRouted="false" />
+        <AssociationConnector Association="demoTestingModel.FK__ServiceIn__Servi__7849DB76" ManuallyRouted="false" />
+        <AssociationConnector Association="demoTestingModel.FK__Workers__PostFK__18EBB532" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,129 @@
+[TestClass()]
+public class CalculationsTests
+{
+    [TestMethod()]
+    public void BeginWorkingTimeIsInvalid()
+    {
+        Calculations calculations = new Calculations();
+
+        Assert.ThrowsException<Exception>(() => calculations.AvailablePeriods(new TimeSpan[] {
+            new TimeSpan(10, 00, 00),
+            new TimeSpan(11, 00, 00),
+            new TimeSpan(15, 00, 00),
+            new TimeSpan(15, 30, 00),
+            new TimeSpan(16, 50, 00), }, new int[] { 60, 30, 10, 10, 40 },new TimeSpan(18, 00, 00), new TimeSpan(08, 00, 00), 30));
+    }
+
+    [TestMethod()]
+    public void StartTimesIsEmpty()
+    {
+        Calculations calculations = new Calculations();
+
+        Assert.ThrowsException<Exception>(() => calculations.AvailablePeriods(new TimeSpan[] {}, new int[] { 60, 30, 10, 10, 40 }, new TimeSpan(08, 00, 00), new TimeSpan(18, 00, 00), 30));
+    }
+
+    [TestMethod()]
+    public void DurationsIsEmpty()
+    {
+        Calculations calculations = new Calculations();
+
+        Assert.ThrowsException<Exception>(() => calculations.AvailablePeriods(new TimeSpan[] {
+            new TimeSpan(10, 00, 00),
+            new TimeSpan(11, 00, 00),
+            new TimeSpan(15, 00, 00),
+            new TimeSpan(15, 30, 00),
+            new TimeSpan(16, 50, 00), }, new int[] {}, new TimeSpan(08, 00, 00), new TimeSpan(18, 00, 00), 30));
+    }
+
+    [TestMethod()]
+    public void ConsultationTimeIsInvalid()
+    {
+        Calculations calculations = new Calculations();
+
+        Assert.ThrowsException<Exception>(() => calculations.AvailablePeriods(new TimeSpan[] {
+            new TimeSpan(10, 00, 00),
+            new TimeSpan(11, 00, 00),
+            new TimeSpan(15, 00, 00),
+            new TimeSpan(15, 30, 00),
+            new TimeSpan(16, 50, 00), }, new int[] { 60, 30, 10, 10, 40 },new TimeSpan(08, 00, 00), new TimeSpan(18, 00, 00), -10));
+    }
+
+    [TestMethod()]
+    public void WorkingTimesIsEqual()
+    {
+        Calculations calculations = new Calculations();
+
+        Assert.ThrowsException<Exception>(() => calculations.AvailablePeriods(new TimeSpan[] {
+            new TimeSpan(10, 00, 00),
+            new TimeSpan(11, 00, 00),
+            new TimeSpan(15, 00, 00),
+            new TimeSpan(15, 30, 00),
+            new TimeSpan(16, 50, 00), }, new int[] { 60, 30, 10, 10, 40 }, new TimeSpan(08, 00, 00), new TimeSpan(08, 00, 00), 30));
+    }
+
+    [TestMethod()]
+    public void ConsultationTimeMoreWorkingTime()
+    {
+        Calculations calculations = new Calculations();
+
+        Assert.ThrowsException<Exception>(() => calculations.AvailablePeriods(new TimeSpan[] {
+            new TimeSpan(10, 00, 00),
+            new TimeSpan(11, 00, 00),
+            new TimeSpan(15, 00, 00),
+            new TimeSpan(15, 30, 00),
+            new TimeSpan(16, 50, 00), }, new int[] { 60, 30, 10, 10, 40 }, new TimeSpan(08, 00, 00), new TimeSpan(18, 00, 00), 1000));
+    }
+
+    [TestMethod()]
+    public void ConsultationTimeEqualWorkingTime()
+    {
+        Calculations calculations = new Calculations();
+
+        Assert.ThrowsException<Exception>(() => calculations.AvailablePeriods(new TimeSpan[] {
+            new TimeSpan(10, 00, 00),
+            new TimeSpan(11, 00, 00),
+            new TimeSpan(15, 00, 00),
+            new TimeSpan(15, 30, 00),
+            new TimeSpan(16, 50, 00), }, new int[] { 60, 30, 10, 10, 40 }, new TimeSpan(08, 00, 00), new TimeSpan(18, 00, 00), 600));
+    }
+
+    [TestMethod()]
+    public void StartTimeEarlyBeginTime()
+    {
+        Calculations calculations = new Calculations();
+
+        Assert.ThrowsException<Exception>(() => calculations.AvailablePeriods(new TimeSpan[] {
+            new TimeSpan(07, 00, 00),
+            new TimeSpan(11, 00, 00),
+            new TimeSpan(15, 00, 00),
+            new TimeSpan(15, 30, 00),
+            new TimeSpan(16, 50, 00), }, new int[] { 60, 30, 10, 10, 40 }, new TimeSpan(08, 00, 00), new TimeSpan(18, 00, 00), 30));
+    }
+
+    [TestMethod()]
+    public void StartTimeLaterEndTime()
+    {
+        Calculations calculations = new Calculations();
+
+        Assert.ThrowsException<Exception>(() => calculations.AvailablePeriods(new TimeSpan[] {
+            new TimeSpan(10, 00, 00),
+            new TimeSpan(11, 00, 00),
+            new TimeSpan(15, 00, 00),
+            new TimeSpan(15, 30, 00),
+            new TimeSpan(18, 50, 00), }, new int[] { 60, 30, 10, 10, 40 }, new TimeSpan(08, 00, 00), new TimeSpan(18, 00, 00), 30));
+    }
+
+    [TestMethod()]
+    public void ConsultationTimeIsEmpty()
+    {
+
+        Calculations calculations = new Calculations();
+
+        Assert.ThrowsException<Exception>(() => calculations.AvailablePeriods(new TimeSpan[] {
+            new TimeSpan(10, 00, 00),
+            new TimeSpan(11, 00, 00),
+            new TimeSpan(15, 00, 00),
+            new TimeSpan(15, 30, 00),
+            new TimeSpan(16, 50, 00), }, new int[] { 60, 30, 10 }, new TimeSpan(08, 00, 00), new TimeSpan(18, 00, 00), 30));
+    }
+}

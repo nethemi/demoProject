@@ -1,0 +1,138 @@
+﻿<Window x:Class="ОТК_ЗАО__Русская_косметика_.Views.OrderFormationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ОТК_ЗАО__Русская_косметика_.Views"
+        mc:Ignorable="d"
+        Title="Формирование заказа" 
+        Height="500" Width="800"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ToolTipClosing="WindowToolTipClosing">
+    
+    <Grid>
+        <Border>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                    <GradientStop Color="Lavender" Offset="1"/>
+                    <GradientStop Color="MistyRose" Offset="0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        
+        <StackPanel>
+
+            <TextBlock Text="ОФОРМЛЕНИЕ ЗАКАЗА"
+                       HorizontalAlignment="Center"
+                       Style="{StaticResource txtStyle}"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Margin="0 10"/>
+            
+            <StackPanel Orientation="Horizontal" Margin="20 5">
+                <TextBlock 
+                           Text="Код лабароторного сосуда"
+                           Margin="0 0 15 0"
+                           Style="{StaticResource txtStyle}"/>
+                <TextBox x:Name="OrderID"
+                             Width="300"
+                         Style="{StaticResource textBox}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="20 5">
+                <TextBlock 
+                Text="Назначить сотрудника"
+                Margin="0 0 42 0"
+                Style="{StaticResource txtStyle}"/>
+
+                <ComboBox x:Name="WorkerName"
+                      Width="300"
+                      SelectedIndex="3"
+                      DisplayMemberPath="FIO"
+                      HorizontalAlignment="Left"
+                          SelectionChanged="WorkerNameSelectionChanged"/>
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal" Margin="20 5">
+                <TextBlock Text="Выберите вид клиента"
+                Style="{StaticResource txtStyle}"/>
+                <ComboBox x:Name="typeClient"
+                      Width="300"
+                          Margin="20 0"
+                      HorizontalAlignment="Left"
+                      SelectionChanged="typeClientSelectionChanged">
+                    <TextBlock Text="Физическое лицо" Style="{StaticResource txtStyle}"/>
+                    <TextBlock Text="Юридическое лицо" Style="{StaticResource txtStyle}"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="20 5"
+                        Name="PersonInfo"
+                        Visibility="Collapsed">
+                <TextBlock Text="ФИО клиента"
+                           Margin=" 0 0 15 0"
+                           Style="{StaticResource txtStyle}"/>
+                <TextBox x:Name="PersonFIO"
+                             Width="300"
+                              Style="{StaticResource textBox}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="20 5"
+                        Name="CompanyInfo"
+                        Visibility="Collapsed">
+                <TextBlock Text="Название компании"
+                           Margin=" 0 0 15 0"
+                           Style="{StaticResource txtStyle}"/>
+                <TextBox x:Name="CompanyName"
+                             Width="300"
+                             Style="{StaticResource textBox}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="20 5">
+                <TextBlock Text="Услуги:" Margin="0 0 15 0"
+                           Style="{StaticResource txtStyle}"/>
+                <ComboBox x:Name="ServiceName"
+                          Width="300"
+                          SelectedIndex="0"
+                          DisplayMemberPath="ServiceName"
+                          SelectionChanged="ServiceNameSelectionChanged"/>
+
+                <Button Name="addService"
+                        Click="addServiceClick"
+                        Style="{StaticResource passButton}"
+                        Foreground="MediumPurple"
+                        Content="Добавить услугу"/>
+
+            </StackPanel>
+            <ListView Name="serviceListView" Margin="20 0" BorderBrush="DarkGray" BorderThickness="1">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=ServiceName}" Width="300" Header="Наименование услуги"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Цена" Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="20 5">
+                <TextBlock Text="СТОИМОСТЬ ЗАКАЗА:"
+                           FontWeight="Bold"
+                           Margin=" 0 0 15 0"
+                           Style="{StaticResource txtStyle}"/>
+                <TextBlock Name="OrderPrice"
+                           Text="0 руб."
+                           Margin=" 0 0 15 0"
+                           Style="{StaticResource txtStyle}"/>
+            </StackPanel>
+            
+                <Button Style="{StaticResource btnStyle}"
+                        Content="Оформить заказ"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 20 0"
+                        x:Name="OrderForming"
+                        Click="OrderFormingClick"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

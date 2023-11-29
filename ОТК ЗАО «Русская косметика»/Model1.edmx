@@ -1,0 +1,615 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище demoTestingModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CompanyClients">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" />
+          <Property Name="INN" Type="nvarchar" MaxLength="255" />
+          <Property Name="R_S" Type="nvarchar" MaxLength="255" />
+          <Property Name="BIK" Type="nvarchar" MaxLength="255" />
+          <Property Name="DirectorFIO" Type="nvarchar" MaxLength="255" />
+          <Property Name="ContactFIO" Type="nvarchar" MaxLength="255" />
+          <Property Name="ContactPhone" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="DateCreate" Type="datetime" />
+          <Property Name="PersonFK" Type="int" />
+          <Property Name="CompanyFK" Type="nvarchar" MaxLength="255" />
+          <Property Name="StatusFK" Type="int" />
+          <Property Name="DateEnd" Type="datetime" />
+          <Property Name="WorkerFK" Type="int" />
+          <Property Name="PeriodExecution" Type="int" />
+        </EntityType>
+        <EntityType Name="PersonClients">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="PersonFIO" Type="nvarchar" MaxLength="50" />
+          <Property Name="PassportData" Type="nvarchar" MaxLength="50" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="Addsres" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ServiceInOrder">
+          <Key>
+            <PropertyRef Name="ServiceOrderID" />
+          </Key>
+          <Property Name="ServiceOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderFK" Type="int" />
+          <Property Name="ServiceFK" Type="int" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="int" Nullable="false" />
+          <Property Name="ServiceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ServiceCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PeriodExecution" Type="int" Nullable="false" />
+          <Property Name="AverageDeviation" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="PriceZAO_RussianCosmetic" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Statuses">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="WorkerPosts">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="int" Nullable="false" />
+          <Property Name="PostName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="WorkerID" />
+          </Key>
+          <Property Name="WorkerID" Type="int" Nullable="false" />
+          <Property Name="PostFK" Type="int" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="255" />
+          <Property Name="Login" Type="nvarchar" MaxLength="255" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastAuthorization" Type="datetime" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "demoTesting.dbo.WorkerService" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="WorkerService">
+          <Property Name="WorkerServiceID" Type="float" />
+          <Property Name="WorkerFK" Type="int" />
+          <Property Name="ServiceFK" Type="int" />
+        </EntityType>-->
+        <Association Name="FK__Orders__CompanyF__72910220">
+          <End Role="CompanyClients" Type="Self.CompanyClients" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyClients">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CompanyFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__PersonFK__719CDDE7">
+          <End Role="PersonClients" Type="Self.PersonClients" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonClients">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="PersonFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__StatusFK__73852659">
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="StatusFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__WorkerFK__74794A92">
+          <End Role="Workers" Type="Self.Workers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="WorkerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="WorkerFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ServiceIn__Order__7755B73D">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="ServiceInOrder" Type="Self.ServiceInOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="ServiceInOrder">
+              <PropertyRef Name="OrderFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ServiceIn__Servi__7849DB76">
+          <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
+          <End Role="ServiceInOrder" Type="Self.ServiceInOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="ServiceInOrder">
+              <PropertyRef Name="ServiceFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workers__PostFK__18EBB532">
+          <End Role="WorkerPosts" Type="Self.WorkerPosts" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkerPosts">
+              <PropertyRef Name="PostID" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="PostFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Ошибки, обнаруженные при создании:
+ошибка 6004: Невозможно найти таблицу "demoTesting.dbo.WorkerService", на которую ссылается связь.
+        <Association Name="FK__WorkerSer__Servi__29221CFB" />-->
+        <!--Ошибки, обнаруженные при создании:
+ошибка 6004: Невозможно найти таблицу "demoTesting.dbo.WorkerService", на которую ссылается связь.
+        <Association Name="FK__WorkerSer__Worke__282DF8C2" />-->
+        <EntityContainer Name="Хранилище demoTestingModelContainer">
+          <EntitySet Name="CompanyClients" EntityType="Self.CompanyClients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonClients" EntityType="Self.PersonClients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceInOrder" EntityType="Self.ServiceInOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkerPosts" EntityType="Self.WorkerPosts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Orders__CompanyF__72910220" Association="Self.FK__Orders__CompanyF__72910220">
+            <End Role="CompanyClients" EntitySet="CompanyClients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__PersonFK__719CDDE7" Association="Self.FK__Orders__PersonFK__719CDDE7">
+            <End Role="PersonClients" EntitySet="PersonClients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__StatusFK__73852659" Association="Self.FK__Orders__StatusFK__73852659">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__WorkerFK__74794A92" Association="Self.FK__Orders__WorkerFK__74794A92">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ServiceIn__Order__7755B73D" Association="Self.FK__ServiceIn__Order__7755B73D">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="ServiceInOrder" EntitySet="ServiceInOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ServiceIn__Servi__7849DB76" Association="Self.FK__ServiceIn__Servi__7849DB76">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="ServiceInOrder" EntitySet="ServiceInOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workers__PostFK__18EBB532" Association="Self.FK__Workers__PostFK__18EBB532">
+            <End Role="WorkerPosts" EntitySet="WorkerPosts" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="demoTestingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CompanyClients">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="INN" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="R_S" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BIK" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DirectorFIO" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ContactFIO" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__CompanyF__72910220" FromRole="CompanyClients" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="DateCreate" Type="DateTime" Precision="3" />
+          <Property Name="PersonFK" Type="Int32" />
+          <Property Name="CompanyFK" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="StatusFK" Type="Int32" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <Property Name="WorkerFK" Type="Int32" />
+          <Property Name="PeriodExecution" Type="Int32" />
+          <NavigationProperty Name="CompanyClients" Relationship="Self.FK__Orders__CompanyF__72910220" FromRole="Orders" ToRole="CompanyClients" />
+          <NavigationProperty Name="PersonClients" Relationship="Self.FK__Orders__PersonFK__719CDDE7" FromRole="Orders" ToRole="PersonClients" />
+          <NavigationProperty Name="Statuses" Relationship="Self.FK__Orders__StatusFK__73852659" FromRole="Orders" ToRole="Statuses" />
+          <NavigationProperty Name="Workers" Relationship="Self.FK__Orders__WorkerFK__74794A92" FromRole="Orders" ToRole="Workers" />
+          <NavigationProperty Name="ServiceInOrder" Relationship="Self.FK__ServiceIn__Order__7755B73D" FromRole="Orders" ToRole="ServiceInOrder" />
+        </EntityType>
+        <EntityType Name="PersonClients">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="PersonFIO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PassportData" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="Addsres" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__PersonFK__719CDDE7" FromRole="PersonClients" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="ServiceInOrder">
+          <Key>
+            <PropertyRef Name="ServiceOrderID" />
+          </Key>
+          <Property Name="ServiceOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderFK" Type="Int32" />
+          <Property Name="ServiceFK" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__ServiceIn__Order__7755B73D" FromRole="ServiceInOrder" ToRole="Orders" />
+          <NavigationProperty Name="Services" Relationship="Self.FK__ServiceIn__Servi__7849DB76" FromRole="ServiceInOrder" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Int32" Nullable="false" />
+          <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ServiceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PeriodExecution" Type="Int32" Nullable="false" />
+          <Property Name="AverageDeviation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="PriceZAO_RussianCosmetic" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ServiceInOrder" Relationship="Self.FK__ServiceIn__Servi__7849DB76" FromRole="Services" ToRole="ServiceInOrder" />
+        </EntityType>
+        <EntityType Name="Statuses">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__StatusFK__73852659" FromRole="Statuses" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="WorkerPosts">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="Int32" Nullable="false" />
+          <Property Name="PostName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Workers" Relationship="Self.FK__Workers__PostFK__18EBB532" FromRole="WorkerPosts" ToRole="Workers" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="WorkerID" />
+          </Key>
+          <Property Name="WorkerID" Type="Int32" Nullable="false" />
+          <Property Name="PostFK" Type="Int32" />
+          <Property Name="FIO" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastAuthorization" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__WorkerFK__74794A92" FromRole="Workers" ToRole="Orders" />
+          <NavigationProperty Name="WorkerPosts" Relationship="Self.FK__Workers__PostFK__18EBB532" FromRole="Workers" ToRole="WorkerPosts" />
+        </EntityType>
+        <Association Name="FK__Orders__CompanyF__72910220">
+          <End Role="CompanyClients" Type="Self.CompanyClients" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyClients">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CompanyFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__PersonFK__719CDDE7">
+          <End Role="PersonClients" Type="Self.PersonClients" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonClients">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="PersonFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__StatusFK__73852659">
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="StatusFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__WorkerFK__74794A92">
+          <End Role="Workers" Type="Self.Workers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="WorkerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="WorkerFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ServiceIn__Order__7755B73D">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="ServiceInOrder" Type="Self.ServiceInOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="ServiceInOrder">
+              <PropertyRef Name="OrderFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ServiceIn__Servi__7849DB76">
+          <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
+          <End Role="ServiceInOrder" Type="Self.ServiceInOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="ServiceInOrder">
+              <PropertyRef Name="ServiceFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workers__PostFK__18EBB532">
+          <End Role="WorkerPosts" Type="Self.WorkerPosts" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkerPosts">
+              <PropertyRef Name="PostID" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="PostFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CompanyClients" EntityType="Self.CompanyClients" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="PersonClients" EntityType="Self.PersonClients" />
+          <EntitySet Name="ServiceInOrder" EntityType="Self.ServiceInOrder" />
+          <EntitySet Name="Services" EntityType="Self.Services" />
+          <EntitySet Name="Statuses" EntityType="Self.Statuses" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="WorkerPosts" EntityType="Self.WorkerPosts" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" />
+          <AssociationSet Name="FK__Orders__CompanyF__72910220" Association="Self.FK__Orders__CompanyF__72910220">
+            <End Role="CompanyClients" EntitySet="CompanyClients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__PersonFK__719CDDE7" Association="Self.FK__Orders__PersonFK__719CDDE7">
+            <End Role="PersonClients" EntitySet="PersonClients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__StatusFK__73852659" Association="Self.FK__Orders__StatusFK__73852659">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__WorkerFK__74794A92" Association="Self.FK__Orders__WorkerFK__74794A92">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ServiceIn__Order__7755B73D" Association="Self.FK__ServiceIn__Order__7755B73D">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="ServiceInOrder" EntitySet="ServiceInOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ServiceIn__Servi__7849DB76" Association="Self.FK__ServiceIn__Servi__7849DB76">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="ServiceInOrder" EntitySet="ServiceInOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workers__PostFK__18EBB532" Association="Self.FK__Workers__PostFK__18EBB532">
+            <End Role="WorkerPosts" EntitySet="WorkerPosts" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище demoTestingModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="CompanyClients">
+            <EntityTypeMapping TypeName="demoTestingModel.CompanyClients">
+              <MappingFragment StoreEntitySet="CompanyClients">
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="R_S" ColumnName="R_S" />
+                <ScalarProperty Name="BIK" ColumnName="BIK" />
+                <ScalarProperty Name="DirectorFIO" ColumnName="DirectorFIO" />
+                <ScalarProperty Name="ContactFIO" ColumnName="ContactFIO" />
+                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="demoTestingModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="PersonFK" ColumnName="PersonFK" />
+                <ScalarProperty Name="CompanyFK" ColumnName="CompanyFK" />
+                <ScalarProperty Name="StatusFK" ColumnName="StatusFK" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="WorkerFK" ColumnName="WorkerFK" />
+                <ScalarProperty Name="PeriodExecution" ColumnName="PeriodExecution" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonClients">
+            <EntityTypeMapping TypeName="demoTestingModel.PersonClients">
+              <MappingFragment StoreEntitySet="PersonClients">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="PersonFIO" ColumnName="PersonFIO" />
+                <ScalarProperty Name="PassportData" ColumnName="PassportData" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Addsres" ColumnName="Addsres" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceInOrder">
+            <EntityTypeMapping TypeName="demoTestingModel.ServiceInOrder">
+              <MappingFragment StoreEntitySet="ServiceInOrder">
+                <ScalarProperty Name="ServiceOrderID" ColumnName="ServiceOrderID" />
+                <ScalarProperty Name="OrderFK" ColumnName="OrderFK" />
+                <ScalarProperty Name="ServiceFK" ColumnName="ServiceFK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="demoTestingModel.Services">
+              <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
+                <ScalarProperty Name="PeriodExecution" ColumnName="PeriodExecution" />
+                <ScalarProperty Name="AverageDeviation" ColumnName="AverageDeviation" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PriceZAO_RussianCosmetic" ColumnName="PriceZAO_RussianCosmetic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Statuses">
+            <EntityTypeMapping TypeName="demoTestingModel.Statuses">
+              <MappingFragment StoreEntitySet="Statuses">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="demoTestingModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkerPosts">
+            <EntityTypeMapping TypeName="demoTestingModel.WorkerPosts">
+              <MappingFragment StoreEntitySet="WorkerPosts">
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="PostName" ColumnName="PostName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workers">
+            <EntityTypeMapping TypeName="demoTestingModel.Workers">
+              <MappingFragment StoreEntitySet="Workers">
+                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
+                <ScalarProperty Name="PostFK" ColumnName="PostFK" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LastAuthorization" ColumnName="LastAuthorization" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
